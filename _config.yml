@@ -9,3 +9,6 @@ plugins: []
 header_pages:
     - contributing.md
 
+exclude:
+    - README.md
+
