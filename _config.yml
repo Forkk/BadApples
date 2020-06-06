@@ -3,22 +3,9 @@ description: >-
   One bad apple spoils the bunch. Let's get rid of the bad ones.
 baseurl: ""
 url: ""
-#twitter_username: jekyllrb
 
-theme: minima
 plugins: []
 
 header_pages:
     - contributing.md
 
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/

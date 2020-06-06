@@ -1,0 +1,120 @@
+---
+---
+
+$text-color: #eee;
+$link-color: #e4572e;
+
+$fade-time: 0.2s;
+
+$nav-height: 42px;
+$nav-bgcolor: lighten(#000, 15%);
+$navbtn-pad: 8px;
+
+body {
+    margin: 0px;
+    font-family: Roboto, sans-serif;
+    background-color: #000;
+    color: $text-color;
+}
+
+
+// Constrains the document width to 800px for better text readability.
+.container {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+// Link style
+a {
+    transition: color $fade-time;
+    color: $link-color;
+    &:hover {
+        color: lighten($link-color, 10%);
+    }
+    &:active {
+        color: darken($link-color, 10%);
+    }
+}
+
+
+// Navbar
+nav.main {
+    height: $nav-height;
+    margin: 0px; padding: 0px;
+    background-color: $nav-bgcolor;
+
+    & a {
+        display: inline-block;
+        text-decoration: none;
+        color: $text-color;
+        padding: 0px $navbtn-pad;
+        margin: 0px;
+        height: $nav-height;
+        line-height: $nav-height;
+        transition: background-color $fade-time;
+
+        &:hover {
+            color: $text-color;
+            background-color: lighten($nav-bgcolor, 10%);
+        }
+        &:active {
+            color: $text-color;
+            background-color: darken($nav-bgcolor, 10%);
+        }
+
+        // Add negative margins to account for padding that we added on the
+        // sides of the first and last buttons. This aligns the text of the
+        // button with the content of the page instead of having it be shifted
+        // over by the padding amount.
+        &:first-child { margin-left: -$navbtn-pad; }
+        &:last-child { margin-right: -$navbtn-pad; }
+    }
+
+    & a.logo {
+        font-size: 24px;
+    }
+}
+
+// Make embeds white background so reddit posts look right.
+.embedly-card-hug {
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+
+// Next/prev page buttons on the sides of the screen.
+.pagebtn {
+    position: absolute;
+    top: 50%;
+
+    font-size: 32px;
+    text-decoration: none;
+
+    width: 50px;
+    height: 50px;
+
+    filter: invert(60%);
+
+    &.next {
+        right: 32px;
+        text-align: right;
+        content: url(/static/img/navigate_next-24px.svg)
+    }
+    &.prev {
+        left: 32px;
+        content: url(/static/img/navigate_before-24px.svg)
+    }
+    &:hover {
+        filter: invert(80%);
+    }
+}
+
+
+// Misc classes
+
+.right {
+    float: right;
+}
+

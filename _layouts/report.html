@@ -36,3 +36,10 @@ layout: default
 {% if nexturl %}<a href="{{ nexturl }}">Next: {{ nexttitle }}</a>{% endif %}<br/>
 {% if prevurl %}<a href="{{ prevurl }}">Previous: {{ prevtitle }}</a>{% endif %}
 
+{% if nexturl %}
+  <a href="{{ nexturl }}" class="pagebtn next"></a>
+{% endif %}
+{% if prevurl %}
+  <a href="{{ prevurl }}" class="pagebtn prev"></a>
+{% endif %}
+

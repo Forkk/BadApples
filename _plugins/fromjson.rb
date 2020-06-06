@@ -11,15 +11,15 @@ module Jekyll
             json = JSON.parse(Net::HTTP.get(URI('https://raw.githubusercontent.com/2020PB/police-brutality/data_build/all-locations.json')))
             for data in json['data']
                 i += 1
-				page_name = Utils::slugify(data['name'])
+                page_name = Utils::slugify(data['name'])
                 page = PageWithoutAFile.new(site, __dir__, "report", "#{page_name}.html")
 
-				page.data.merge!(data)
-				page.data.merge!(
-					"title" => data['name'],
-					"exclude" => true,
-					"layout" => 'report'
-				)
+                page.data.merge!(data)
+                page.data.merge!(
+                    "title" => data['name'],
+                    "exclude" => true,
+                    "layout" => 'report'
+                )
 
                 # If there is a streamable link, embed that, otherwise embed a
                 # reddit link, or a twitter link, etc.
