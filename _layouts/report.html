@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<h1>{{ page.title }}</h1>
+
+<p>Location: {{ page.city }}{% if page.state %}, {{ page.state }}{% endif %}</p>
+
+{% if page.embed_link %}
+    {% oembed {{ page.embed_link }} %}
+{% endif %}
+
+<h2>Links</h2>
+
+<ul>
+{% for link in page.links %}
+<li><a href="{{ link }}">{{ link }}</a></li>
+{% endfor %}
+</ul>
+
+{% for spage in site.data.report_pages %}
+  {% if spage.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prevurl = prev.url %}
+      {% assign prevtitle = prev.title %}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign next = site.data.report_pages[forloop.index] %}
+      {% assign nexttitle = next.title %}
+      {% assign nexturl = next.url %}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = spage %}
+{% endfor %}
+
+{% if nexturl %}<a href="{{ nexturl }}">Next: {{ nexttitle }}</a>{% endif %}<br/>
+{% if prevurl %}<a href="{{ prevurl }}">Previous: {{ prevtitle }}</a>{% endif %}
+
