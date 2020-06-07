@@ -11,9 +11,9 @@ module Jekyll
             json = JSON.parse(Net::HTTP.get(URI('https://raw.githubusercontent.com/2020PB/police-brutality/data_build/all-locations.json')))
             for data in json['data']
                 i += 1
-                page_name = Utils::slugify(data['name'])
+                page_name = data['id']
                 if page_name.nil? || page_name.empty?
-                    puts "Report has no name: #{data}".red
+                    puts "Report has no ID: #{data}".red
                     page_name = i.to_s
                 end
                 page = PageWithoutAFile.new(site, __dir__, "report", "#{page_name}.html")
