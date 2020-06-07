@@ -19,12 +19,19 @@ body {
 
 
 // Constrains the document width to 800px for better text readability.
-.container {
-    width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+@media (min-width: 800px) {
+    .container {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
-
+@media (max-width: 799px) {
+    .container {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+}
 
 // Link style
 a {
@@ -35,6 +42,11 @@ a {
     }
     &:active {
         color: darken($link-color, 10%);
+    }
+    // Wrap long links to media (like twitter posts) if they go off screen.
+    // Mainly for mobile, but can apply anywhere.
+    &.media-link {
+        overflow-wrap: anywhere;
     }
 }
 
@@ -108,6 +120,12 @@ nav.main {
     }
     &:hover {
         filter: invert(80%);
+    }
+
+    @media (max-width: 800px) {
+        & {
+            display: none;
+        }
     }
 }
 
