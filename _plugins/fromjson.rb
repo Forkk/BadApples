@@ -5,11 +5,47 @@ module Jekyll
         safe true
 
         def generate(site)
-            i = 0
+            site.data['source_data'] = JSON.parse(Net::HTTP.get(URI('https://raw.githubusercontent.com/2020PB/police-brutality/data_build/all-locations.json')))
+
+            generate_reports(site)
+            generate_states(site)
+        end
+
+        # Generate pages for browsing incidents by state.
+        def generate_states(site)
+            states = {}
+            for page in site.data['report_pages']
+                if !states.has_key?(page['state'])
+                    states[page['state']] = []
+                end
+                states[page['state']] << page
+            end
+
+            site.data['state_pages'] = []
+            for name in states.keys
+                page = PageWithoutAFile.new(site, __dir__, "state", "#{name.downcase}.html")
+
+                page.data.merge!(
+                    "title" => name,
+                    "exclude" => true,
+                    "layout" => 'state',
+                    "reports" => states[name]
+                )
+
+                site.pages << page
+                site.data['state_pages'] << page
+            end
+            site.data['state_pages'].sort! do |a, b|
+                a['title'] <=> b['title']
+            end
+        end
+
+        # Generate individual pages for each report.
+        def generate_reports(site)
             site.data['report_pages'] = []
 
-            json = JSON.parse(Net::HTTP.get(URI('https://raw.githubusercontent.com/2020PB/police-brutality/data_build/all-locations.json')))
-            for data in json['data']
+            i = 0
+            for data in site.data['source_data']['data']
                 i += 1
                 page_name = data['id']
                 if page_name.nil? || page_name.empty?
@@ -45,6 +81,12 @@ module Jekyll
 
                 site.pages << page
                 site.data['report_pages'] << page
+            end
+
+            # Sort report pages by state so that all reports from a single
+            # state appear next to each other.
+            site.data['report_pages'].sort! do |a, b|
+                a['state'] <=> b['state']
             end
         end
 

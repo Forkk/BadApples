@@ -1,0 +1,22 @@
+---
+layout: default
+title: Police Brutality incidents by State
+permalink: /state/
+---
+
+<h1>Police Brutality in Each State</h1>
+
+<p>Here you can browse a the list of police brutality incidents sorted by the
+state in which each incident was reported.</p>
+
+<ul>
+{% for page in site.data.state_pages %}
+    <li>
+        <a href="{{ page.url }}">
+            {{ page.title }}
+            ({{ page.reports.size }} incidents reported)
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
