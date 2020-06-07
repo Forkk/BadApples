@@ -18,6 +18,17 @@ module Jekyll
                 end
                 page = PageWithoutAFile.new(site, __dir__, "report", "#{page_name}.html")
 
+                # Process links in the data to change `old.reddit.com` links to
+                # new reddit links. This is both for consistency, and to fix
+                # oembeds, which don't work with `old.reddit.com` links.
+                data['links'].map! do |link|
+                    if link.include?('old.reddit.com')
+                        link.sub 'old.reddit.com', 'www.reddit.com'
+                    else
+                        link
+                    end
+                end
+
                 page.data.merge!(data)
                 page.data.merge!(
                     "title" => data['name'],
