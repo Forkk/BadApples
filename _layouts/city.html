@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<h1>{{ page.reports.size }} Police Brutality Incidents in {{ page.title }}</h1>
+
+{% for report in page.reports %}
+    <h2>
+        <a href="{{ report.url }}">
+            {% if report.city %}{{ report.city }} &ndash;{% endif %}
+            {{ report.title }}
+        </a>
+    </h2>
+
+    {% if report.date %}
+        <p>Date: {{ report.date }}</p>
+    {% endif %}
+
+    {% if report.embed_link %}
+        {% oembed {{ report.embed_link }} %}
+    {% else %}
+        <p>Links to media:</p>
+        <ul>
+            {% for link in report.links %}
+                <li><a href="{{ link }}" class="media-link">{{ link }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endfor %}
+

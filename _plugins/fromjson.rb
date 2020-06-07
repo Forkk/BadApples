@@ -9,6 +9,46 @@ module Jekyll
 
             generate_reports(site)
             generate_states(site)
+            generate_cities(site)
+        end
+
+        # Generate pages for browsing incidents by city.
+        def generate_cities(site)
+            cities = {}
+            for page in site.data['report_pages']
+                key = "#{page['state']}-#{page['city']}"
+                if !cities.has_key?(key)
+                    cities[key] = []
+                end
+                cities[key] << page
+            end
+
+            site.data['city_pages'] = []
+            site.data['city_pages_by_state'] = {}
+            for key in cities.keys
+                sample = cities[key][0]
+                page = PageWithoutAFile.new(site, __dir__, "city", "#{key.downcase}.html")
+
+                page.data.merge!(
+                    "title" => "#{sample['city']}, #{sample['state']}",
+                    "state" => sample['state'],
+                    "city" => sample['city'],
+                    "layout" => 'city',
+                    "reports" => cities[key]
+                )
+
+                site.pages << page
+                site.data['city_pages'] << page
+
+                if !site.data['city_pages_by_state'].has_key?(sample['state'])
+                    site.data['city_pages_by_state'][sample['state']] = []
+                end
+                site.data['city_pages_by_state'][sample['state']] << page
+            end
+
+            site.data['city_pages'].sort! do |a, b|
+                a['title'] <=> b['title']
+            end
         end
 
         # Generate pages for browsing incidents by state.

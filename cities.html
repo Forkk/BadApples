@@ -1,0 +1,26 @@
+---
+layout: default
+title: Police Brutality incidents by City
+permalink: /city/
+---
+
+<h1>{{ site.data.city_pages.size }} Cities With Police Brutality Reports</h1>
+
+<p>Here you can browse a the list of police brutality incidents sorted by the
+city in which each incident was reported.</p>
+
+{% for state in site.data.city_pages_by_state %}
+    <h2>{{ state[0] }}</h2>
+
+    <ul>
+        {% for city in state[1] %}
+            <li>
+                <a href="{{ city.url }}">
+                    {{ city.title }}
+                    ({{ city.reports.size }} incidents reported)
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
