@@ -12,6 +12,10 @@ module Jekyll
             for data in json['data']
                 i += 1
                 page_name = Utils::slugify(data['name'])
+                if page_name.nil? || page_name.empty?
+                    puts "Report has no name: #{data}".red
+                    page_name = i.to_s
+                end
                 page = PageWithoutAFile.new(site, __dir__, "report", "#{page_name}.html")
 
                 page.data.merge!(data)
